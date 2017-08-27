@@ -1,0 +1,23 @@
+body {
+  background: black
+}
+
+.item {
+  width: 16px;
+  height: 16px;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  float: left;
+  background: url("items.png");
+  transform: scale(2);
+  -webkit-backface-visibility: hidden;
+  image-rendering: pixelated;
+}
+
+.item.disabled {
+  opacity: 0.5;
+}
+
+.clear {
+  clear: both;
+}
