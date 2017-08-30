@@ -1,1 +1,0 @@
-var items = {"bow":0,"boomerang":2,"hookshot":0,"bombs":9,"mushroom":0,"fireRod":0,"iceRod":0,"bombos":0,"ether":0,"quake":0,"lamp":0,"hammer":0,"flute":0,"bugNet":0,"book":0,"hasBottles":0,"somaria":0,"byrna":0,"cape":0,"mirror":0,"gloves":0,"boots":0,"flippers":0,"moonPearl":0,"unused":0,"sword":2,"shield":0,"armor":0,"bottle1":0,"bottle2":0,"bottle3":0,"bottle4":0}
