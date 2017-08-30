@@ -38,7 +38,7 @@ One thing to note, because the SRAM Trace feature of the randomizer is on its ow
 * The main weakness in this script is that I don't know of a better way to read the current SRAM state other than forcing OpenEmu to dump it to the filesystem via Quick Save. While the game is saving its state, you may get some mild frame rate dropping, and OpenEmu's floppy disk icon will appear each time. I would love a better approach to this, so please contact me if you have better ideas.
 * The only way I could force OpenEmu to Quick Save was via AppleScript, and as far as I know there's no way to do it without forcing OpenEmu to the foreground each time, which might be annoying depending on your setup if you're streaming to Twitch. Again, this could be avoided if I knew of an easier way to access the game's current SRAM state.
 * Depending on your update frequency, you may see a delay in your HUD being updated. This is due to the ROM's SRAM Trace functionality being on its own timer.
-* Currently tracks all the major inventory items. With a little more work, it could also track medallions, crystals, and Agahnim.
+* ~~Currently tracks all the major inventory items. With a little more work, it could also track pendants, crystals, and Agahnim.~~
 * Doesn't have fancy options for customizing the UI. But if you're good with HTML and CSS, it shouldn't be too hard to do that way.
 
 ## Pull requests
