@@ -41,8 +41,6 @@ def update
   sram = StringIO.new(data)
   sram.pos = ITEMS_OFFSET
 
-  puts "Items..."
-
   items = {
     bow: sram.read(1).ord,
     boomerang: sram.read(1).ord,
@@ -80,11 +78,23 @@ def update
 
   sram.pos = PENDANTS_OFFSET
   pendants = sram.read(1).ord
-  items[:pendants] = ("%08b" % pendants).split("").reverse[0..2].map(&:to_i)
+  pendants = ("%08b" % pendants).split("").reverse.map(&:to_i)
+
+  items[:pendant_green] = pendants[0]
+  items[:pendant_blue] = pendants[1]
+  items[:pendant_red] = pendants[2]
 
   sram.pos = CRYSTALS_OFFSET
   crystals = sram.read(1).ord
-  items[:crystals] = ("%08b" % crystals).split("").reverse[0..6].map(&:to_i)
+  crystals = ("%08b" % crystals).split("").reverse.map(&:to_i)
+
+  items[:crystal_mm] = crystals[0]
+  items[:crystal_pod] = crystals[1]
+  items[:crystal_ip] = crystals[2]
+  items[:crystal_tr] = crystals[3]
+  items[:crystal_sp] = crystals[4]
+  items[:crystal_tt] = crystals[5]
+  items[:crystal_sw] = crystals[6]
 
   sram.pos = AGA_OFFSET
   items[:aga] = sram.read(1).ord >= 3 ? 1 : 0

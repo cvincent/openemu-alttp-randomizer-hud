@@ -20,4 +20,5 @@ body {
 
 .clear {
   clear: both;
+  height: 2px;
 }

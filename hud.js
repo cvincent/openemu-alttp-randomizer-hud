@@ -29,16 +29,16 @@ var sprites = [
   ["bottle2", 1],
   ["bottle3", 1],
   ["bottle4", 1],
-  ["green_med", 1],
-  ["blue_med", 1],
-  ["red_med", 1],
-  ["crystal_1", 1],
-  ["crystal_2", 1],
-  ["crystal_3", 1],
-  ["crystal_4", 1],
-  ["crystal_5", 1],
-  ["crystal_6", 1],
-  ["crystal_7", 1],
+  ["pendant_green", 1],
+  ["pendant_blue", 1],
+  ["pendant_red", 1],
+  ["crystal_mm", 1],
+  ["crystal_pod", 1],
+  ["crystal_ip", 1],
+  ["crystal_tr", 1],
+  ["crystal_sp", 1],
+  ["crystal_tt", 1],
+  ["crystal_sw", 1],
   ["boomerang", 2],
   ["sword", 2],
   ["sword", 3],
@@ -56,11 +56,11 @@ var sprites = [
   ["bottle", 4],
   ["bottle", 5],
   ["bottle", 6],
-  ["bottle", 7]
+  ["bottle", 7],
+  ["aga", 1]
 ]
 
 var update = function() {
-  // console.log("reloading items: " + new Date().getTime())
   document.getElementById("hud-data").remove()
 
   var script = document.createElement("script")
@@ -80,7 +80,9 @@ var update = function() {
     if (itemName.indexOf("bottle") > -1) itemName = "bottle"
 
     for (var j = 0; j < sprites.length; j++) {
-      if (sprites[j][0] == itemName && sprites[j][1] <= items[div.id]) {
+      var itemStatus = items[div.id]
+
+      if (sprites[j][0] == itemName && sprites[j][1] <= itemStatus) {
         spriteIndex = j
       } else if (sprites[j][0] == itemName && firstSpriteIndex == null) {
         firstSpriteIndex = j
