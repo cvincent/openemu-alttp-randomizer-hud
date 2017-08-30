@@ -78,19 +78,13 @@ def update
     bottle4: sram.read(1).ord,
   }
 
-  puts "Pendants..."
-
   sram.pos = PENDANTS_OFFSET
   pendants = sram.read(1).ord
   items[:pendants] = ("%08b" % pendants).split("").reverse[0..2].map(&:to_i)
 
-  puts "Crystals..."
-
   sram.pos = CRYSTALS_OFFSET
   crystals = sram.read(1).ord
   items[:crystals] = ("%08b" % crystals).split("").reverse[0..6].map(&:to_i)
-
-  puts "Agahnim..."
 
   sram.pos = AGA_OFFSET
   items[:aga] = sram.read(1).ord >= 3 ? 1 : 0
