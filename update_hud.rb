@@ -14,12 +14,20 @@ def read_block(io)
   return [name, data]
 end
 
-while true
+SAVE_DIR = ARGV[1] + "Quick Save State.oesavestate"
+SAVE_FILE = SAVE_DIR + "/State"
+STARTING_ADDRESS = 0x1AC0
+ITEMS_OFFSET = STARTING_ADDRESS + 0x340
+AGA_OFFSET = STARTING_ADDRESS + 0x3C5
+PENDANTS_OFFSET = STARTING_ADDRESS + 0x374
+CRYSTALS_OFFSET = STARTING_ADDRESS + 0x37A
+
+def update
   puts "Updating..."
 
-  `./SaveOpenEmuState.applescript`
+  # `./SaveOpenEmuState.applescript`
 
-  io = File.open(ARGV[1] + "Quick Save State.oesavestate/State")
+  io = File.open(SAVE_FILE)
   read_header(io)
 
   name = nil
@@ -31,7 +39,9 @@ while true
   end
 
   sram = StringIO.new(data)
-  sram.pos = 0x1E00
+  sram.pos = ITEMS_OFFSET
+
+  puts "Items..."
 
   items = {
     bow: sram.read(1).ord,
@@ -68,12 +78,52 @@ while true
     bottle4: sram.read(1).ord,
   }
 
+  puts "Pendants..."
+
+  sram.pos = PENDANTS_OFFSET
+  pendants = sram.read(1).ord
+  items[:pendants] = ("%08b" % pendants).split("").reverse[0..2].map(&:to_i)
+
+  puts "Crystals..."
+
+  sram.pos = CRYSTALS_OFFSET
+  crystals = sram.read(1).ord
+  items[:crystals] = ("%08b" % crystals).split("").reverse[0..6].map(&:to_i)
+
+  puts "Agahnim..."
+
+  sram.pos = AGA_OFFSET
+  items[:aga] = sram.read(1).ord >= 3 ? 1 : 0
+
+  # sram.rewind
+
+  # sram.each_byte.with_index do |b, i|
+  #   if b.ord == 3
+  #     puts (i - STARTING_ADDRESS).to_s(16)
+  #   end
+  # end
+
+  sram.close
   io.close
 
   File.write(
     "items-data.js",
-    "var items = " + items.to_json
+    "var items = " + JSON.pretty_generate(items)
   )
 
   sleep ARGV[0].to_i
 end
+
+if ARGV[0] == "--listen"
+  require "listen"
+  Listen.to(SAVE_DIR) do
+    update
+  end.start
+  sleep
+else
+  while true
+    update
+    sleep ARGV[0].to_i
+  end
+end
+
