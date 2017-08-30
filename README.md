@@ -19,6 +19,20 @@ After downloading, here's how to run it:
 * Last, in Terminal, `cd` into the HUD directory and get the script running. For watch, I use the following to update the HUD every 10 seconds (**note the trailing slash** in the save state path, it's important!):
 `ruby update_hud.rb 10 ~/Library/Application\ Support/OpenEmu/Save\ States/YOUR_ROM_NAME_HERE/`
 
+## Alternative mode: manual saves
+
+The default usage above works by forcing OpenEmu to come to the foreground and Quick Save every X seconds. This might be not be ideal for some setups (see caveats below). The alternative mode just watches for your Quick Save to change rather than forcing Quick Saves at a regular interval.
+
+With this mode, you can set a handy keyboard shortcut or an extra button on your gamepad in OpenEmu preferences to perform Quick Saves easily. After you get a new item, when convenient, do the Quick Save to update your HUD. This approach ensures you're not getting unexpected frame rate lag during critical parts of your run due to automatic Quick Saves. It's not quite as handy as a fully automated system (which I'd like to make happen, see caveats below), but it's better than having to stop mid-game to mouse around and update the HUD totally manually.
+
+This mode works exactly the same as above, with the following exceptions:
+
+* You'll need to install the `listen` gem. This Terminal command should do it: `gem install listen`
+* Instead of the number of seconds between updates, pass the `--listen` option, like so:
+`ruby update_hud.rb --listen ~/Library/Application\ Support/OpenEmu/Save\ States/YOUR_ROM_NAME_HERE/`
+
+One thing to note, because the SRAM Trace feature of the randomizer is on its own timer (as noted in the caveats below), it's possible that your first save won't show any changes on the HUD. If this happens, do another Quick Save in a few seconds and the update should take.
+
 ## Caveats/future improvements
 
 * The main weakness in this script is that I don't know of a better way to read the current SRAM state other than forcing OpenEmu to dump it to the filesystem via Quick Save. While the game is saving its state, you may get some mild frame rate dropping, and OpenEmu's floppy disk icon will appear each time. I would love a better approach to this, so please contact me if you have better ideas.
