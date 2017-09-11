@@ -25,8 +25,6 @@ CRYSTALS_OFFSET = STARTING_ADDRESS + 0x37A
 def update
   puts "Updating..."
 
-  # `./SaveOpenEmuState.applescript`
-
   io = File.open(SAVE_FILE)
   read_header(io)
 
@@ -125,6 +123,7 @@ if ARGV[0] == "--listen"
   end.start
   sleep
 else
+  `./SaveOpenEmuState.applescript`
   while true
     update
     sleep ARGV[0].to_i
